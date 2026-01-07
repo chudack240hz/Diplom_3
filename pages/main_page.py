@@ -2,6 +2,7 @@
 Методы взаимодействия с главной страницей
 """
 import allure
+from pathlib import Path
 
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
@@ -64,6 +65,9 @@ class MainPage(BasePage):
     def close_check_popup(self):
         """Закрывает модальное окно с информацией о заказе"""
         self.click_to_element(MainPageLocators.INGREDIENT_DETAILS_CLOSE_BUTTON)
+        WebDriverWait(self.driver, TIME_WAIT).until(
+            EC.invisibility_of_element_located(MainPageLocators.ORDER_SUCCESS_POPUP)
+        )
 
     @allure.step('Добавление ингредиента в заказ')
     def add_ingredient_to_order(self):
@@ -72,9 +76,9 @@ class MainPage(BasePage):
         target_element = self.find_element(MainPageLocators.TARGET_CSS)
 
         # ActionChains некорректно работает с перетаскиванием элементов
-        f = open("./scripts/drag_and_drop.js", "r", encoding='utf-8')
-        javascript = f.read()
-        f.close()
+        script_path = Path(__file__).resolve().parent.parent / "scripts" / "drag_and_drop.js"
+        with script_path.open("r", encoding="utf-8") as f:
+            javascript = f.read()
         self.driver.execute_script(javascript, source_element, target_element)
 
     @allure.step('Оформление заказа')

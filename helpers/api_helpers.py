@@ -41,7 +41,6 @@ def delete_user(user: ApiUser) -> None:
             timeout=10,
         )
     except requests.RequestException:
-        # Пользователь удаляется по best-effort принципу
         pass
 
 

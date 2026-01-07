@@ -1,11 +1,11 @@
 """Тесты функциональности ленты заказов"""
 import allure
 
+from helpers.api_helpers import delete_user, get_latest_order_number
+from helpers.ui_helpers import authorize_new_user, place_order
 from pages.feed_page import FeedPage
 from pages.login_page import LoginPage
 from pages.main_page import MainPage
-from tests.utils.api_helpers import delete_user, get_latest_order_number
-from tests.utils.ui_helpers import authorize_new_user, place_order
 
 
 class TestFeedFunctionality:

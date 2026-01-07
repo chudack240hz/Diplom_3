@@ -1,6 +1,5 @@
 """Базовый класс страницы с общими взаимодействиями с веб-элементами"""
 from typing import Tuple, Any
-import time
 
 from selenium.common import ElementClickInterceptedException, UnexpectedAlertPresentException
 from selenium.webdriver.remote.webelement import WebElement
@@ -26,11 +25,15 @@ class BasePage:
         except ElementClickInterceptedException:
             element = self.driver.find_element(*locator)
             self.driver.execute_script("arguments[0].scrollIntoView(true);", element)
-            time.sleep(3)
-            element.click()
+            WebDriverWait(self.driver, timeout).until(EC.element_to_be_clickable(locator))
+            try:
+                element.click()
+            except ElementClickInterceptedException:
+                self.driver.execute_script("arguments[0].click();", element)
         except UnexpectedAlertPresentException:
             alert = self.driver.switch_to.alert
             alert.dismiss()
+            WebDriverWait(self.driver, timeout).until(EC.element_to_be_clickable(locator))
             self.driver.find_element(*locator).click()
 
     def get_text(self, locator: Tuple[str, str]) -> str:
