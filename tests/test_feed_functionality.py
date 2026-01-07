@@ -20,15 +20,12 @@ class TestFeedFunctionality:
 
         user = authorize_new_user(main_page, login_page)
         try:
-            # Получаем начальное значение счетчика
             main_page.click_orders_feed_button()
             count_today = feed_page.count_today()
 
-            # Создаем новый заказ
             main_page.click_constructor_button()
             place_order(main_page)
 
-            # Проверяем увеличение счетчика
             main_page.click_orders_feed_button()
             count_today_new = feed_page.count_today()
             assert count_today_new > count_today, (
@@ -46,15 +43,12 @@ class TestFeedFunctionality:
 
         user = authorize_new_user(main_page, login_page)
         try:
-            # Получаем начальное значение общего счетчика
             main_page.click_orders_feed_button()
             count_all = feed_page.count_all()
 
-            # Создаем новый заказ
             main_page.click_constructor_button()
             place_order(main_page)
 
-            # Проверяем увеличение общего счетчика
             main_page.click_orders_feed_button()
             count_all_new = feed_page.count_all()
             assert count_all_new > count_all, (
@@ -72,12 +66,10 @@ class TestFeedFunctionality:
 
         user = authorize_new_user(main_page, login_page)
         try:
-            # Создаем заказ и получаем его номер
             main_page.click_constructor_button()
             place_order(main_page)
             latest_order_number = get_latest_order_number(user)
 
-            # Проверяем отображение заказа в разделе "В работе"
             main_page.click_orders_feed_button()
             feed_page.wait_order_in_progress(latest_order_number)
             orders = feed_page.get_order_numbers()
