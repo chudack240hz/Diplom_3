@@ -2,10 +2,8 @@ import random
 import string
 from datetime import datetime, timedelta
 
-# Константы
 TIME_WAIT = 10
 
-# Базовые URL
 class Urls:
     main_page = 'https://stellarburgers.education-services.ru/'
     feed_page = 'https://stellarburgers.education-services.ru/feed'
@@ -44,7 +42,7 @@ class DataGenerator:
     def random_date(start_date=None, end_date=None):
         """Генерация случайной даты в формате ДД.ММ.ГГГГ"""
         if not start_date:
-            start_date = datetime.now() - timedelta(days=365*5)  # 5 лет назад
+            start_date = datetime.now() - timedelta(days=365*5)
         if not end_date:
             end_date = datetime.now()
             
@@ -93,5 +91,4 @@ class UserData:
         return f"New{self._password}123!"
 
 
-# Создаем экземпляр
 user_data = UserData()

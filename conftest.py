@@ -13,6 +13,7 @@ from selenium.webdriver.firefox.service import Service as FirefoxService
 from selenium.common.exceptions import WebDriverException
 
 from data import Urls
+from helpers.api_helpers import create_api_user, delete_user
 
 
 @pytest.fixture(scope='function')
@@ -42,3 +43,11 @@ def driver():
     driver.get(Urls.main_page)
     yield driver
     driver.quit()
+
+
+@pytest.fixture(scope='function')
+def api_user():
+    """Создание и удаление тестового пользователя"""
+    user = create_api_user()
+    yield user
+    delete_user(user)
