@@ -33,7 +33,9 @@ class MainPage(BasePage):
     @allure.step('Клик на "Лента заказов"')
     def click_orders_feed_button(self):
         """Клик по кнопке перехода в раздел ленты заказов"""   
+        self.close_cookies_banner()
         self.click_to_element(MainPageLocators.ORDERS_FEED_BUTTON)
+        WebDriverWait(self.driver, 20).until(EC.url_contains("/feed"))
 
     @allure.step('Клик по ингредиенту')
     def click_ingredient(self):

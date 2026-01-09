@@ -2,6 +2,7 @@
 from typing import Tuple, Any
 
 from selenium.common import ElementClickInterceptedException, UnexpectedAlertPresentException
+from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -16,6 +17,12 @@ class BasePage:
     def find_element(self, locator: Tuple[str, str]) -> WebElement:
         """Поиск видимого элемента на странице"""
         return WebDriverWait(self.driver, 15).until(EC.visibility_of_element_located(locator))
+
+    def close_cookies_banner(self) -> None:
+        """Закрывает баннер cookies, если он присутствует"""
+        cookies = self.driver.find_elements(By.ID, "rcc-confirm-button")
+        if cookies:
+            cookies[0].click()
 
     def click_to_element(self, locator: Tuple[str, str], timeout: int = 10) -> None:
         """Клик на элемент с обработкой исключений"""

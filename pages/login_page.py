@@ -37,6 +37,7 @@ class LoginPage(BasePage):
         password_input.send_keys(password)
         submit_button = self.driver.find_element(*LL.LOGIN_BUTTON)
         submit_button.click()
+        WebDriverWait(self.driver, TIME_WAIT).until(EC.url_to_be(Urls.main_page))
 
     @allure.step('Проверка перехода на страницу "Восстановить пароль"')
     def assert_forgot_page(self):
