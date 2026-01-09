@@ -15,6 +15,12 @@ from pages.base_page import BasePage
 class MainPage(BasePage):
     """Класс страницы конструктора бургеров, содержащий методы для взаимодействия с элементами страницы"""
     
+    @allure.step('Открыть главную страницу')
+    def open(self):
+        """Открывает главную страницу конструктора"""
+        self.open_url(Urls.main_page)
+        self.close_cookies_banner()
+
     @allure.step('Авторизация')
     def click_login_btn(self):
         """Клик по кнопке входа в аккаунт на главной странице"""

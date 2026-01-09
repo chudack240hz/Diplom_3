@@ -12,7 +12,6 @@ from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.firefox.service import Service as FirefoxService
 from selenium.common.exceptions import WebDriverException
 
-from data import Urls
 from helpers.api_helpers import create_api_user, delete_user
 
 
@@ -40,7 +39,6 @@ def driver():
     else:
         raise ValueError(f"Неподдерживаемый браузер: {browser}")
 
-    driver.get(Urls.main_page)
     yield driver
     driver.quit()
 

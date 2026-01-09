@@ -15,6 +15,7 @@ class TestUIFlows:
     def test_navigate_to_constructor(self, driver):
         """Проверка перехода на страницу конструктора"""
         main_page = MainPage(driver)
+        main_page.open()
         main_page.click_constructor_button()
         main_page.wait_navigating_url(Urls.main_page)
         assert main_page.get_url() == Urls.main_page, 'Не открыт раздел "Конструктор"'
@@ -23,6 +24,7 @@ class TestUIFlows:
     def test_navigate_to_orders_feed(self, driver):
         """Проверка перехода в раздел ленты заказов"""
         main_page = MainPage(driver)
+        main_page.open()
         main_page.click_orders_feed_button()
         main_page.wait_navigating_url(Urls.feed_page)
         assert main_page.get_url() == Urls.feed_page, 'Не открыт раздел "Лента заказов"'
@@ -31,6 +33,7 @@ class TestUIFlows:
     def test_open_ingredient_modal(self, driver):
         """Проверка отображения модального окна с деталями ингредиента"""
         main_page = MainPage(driver)
+        main_page.open()
         main_page.click_ingredient()
         popup = main_page.find_element(MainPageLocators.INGREDIENT_DETAILS_POPUP)
         assert popup.is_displayed(), 'Модальное окно ингредиента не открылось'
@@ -39,6 +42,7 @@ class TestUIFlows:
     def test_close_ingredient_modal(self, driver):
         """Проверка закрытия модального окна с деталями ингредиента"""
         main_page = MainPage(driver)
+        main_page.open()
         main_page.open_ingredient_popup()
         main_page.close_ingredient_popup()
         assert not driver.find_elements(*MainPageLocators.INGREDIENT_DETAILS_POPUP), (
@@ -49,6 +53,7 @@ class TestUIFlows:
     def test_ingredient_counter_increase(self, driver):
         """Проверка, что цена заказа меняется при добавлении ингредиента"""
         main_page = MainPage(driver)
+        main_page.open()
         main_page.add_ingredient_to_order()
         count_text = main_page.find_element(MainPageLocators.COUNTER_CSS).text
         assert count_text != "0", 'Цена заказа не изменилась после добавления ингредиента'

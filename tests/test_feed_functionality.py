@@ -18,14 +18,15 @@ class TestFeedFunctionality:
         login_page = LoginPage(driver)
         feed_page = FeedPage(driver)
 
+        main_page.open()
         authorize_new_user(main_page, login_page, api_user)
-        main_page.click_orders_feed_button()
+        feed_page.open()
         count_today = feed_page.count_today()
 
         main_page.click_constructor_button()
         place_order(main_page)
 
-        main_page.click_orders_feed_button()
+        feed_page.open()
         count_today_new = feed_page.count_today()
         assert count_today_new > count_today, (
             'Счетчик "Выполнено за сегодня" не увеличился после создания нового заказа'
@@ -38,14 +39,15 @@ class TestFeedFunctionality:
         login_page = LoginPage(driver)
         feed_page = FeedPage(driver)
 
+        main_page.open()
         authorize_new_user(main_page, login_page, api_user)
-        main_page.click_orders_feed_button()
+        feed_page.open()
         count_all = feed_page.count_all()
 
         main_page.click_constructor_button()
         place_order(main_page)
 
-        main_page.click_orders_feed_button()
+        feed_page.open()
         count_all_new = feed_page.count_all()
         assert count_all_new > count_all, (
             'Общий счетчик выполненных заказов не увеличился после создания нового заказа'
@@ -58,12 +60,13 @@ class TestFeedFunctionality:
         login_page = LoginPage(driver)
         feed_page = FeedPage(driver)
 
+        main_page.open()
         authorize_new_user(main_page, login_page, api_user)
         main_page.click_constructor_button()
         place_order(main_page)
         latest_order_number = get_latest_order_number(api_user)
 
-        main_page.click_orders_feed_button()
+        feed_page.open()
         feed_page.wait_order_in_progress(latest_order_number)
         orders = feed_page.get_order_numbers()
         assert latest_order_number in orders, (

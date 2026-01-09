@@ -5,6 +5,7 @@ import allure
 
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
 
 from data import TIME_WAIT, Urls, user_data
 from locators.login_page_locators import LoginPageLocators as LL
@@ -14,6 +15,12 @@ from pages.base_page import BasePage
 class LoginPage(BasePage):
     """Класс страницы авторизации"""
     
+    @allure.step('Открыть страницу авторизации')
+    def open(self):
+        """Открывает страницу логина"""
+        self.open_url(Urls.login_page)
+        self.close_cookies_banner()
+
     @allure.step('Клик по кнопке "Восстановить пароль"')
     def click_reset_btn(self):
         """Кликает по кнопке восстановления пароля"""
@@ -36,6 +43,10 @@ class LoginPage(BasePage):
         )
         password_input.send_keys(password)
         submit_button = self.driver.find_element(*LL.LOGIN_BUTTON)
+        self.close_cookies_banner()
+        WebDriverWait(self.driver, TIME_WAIT).until(
+            EC.invisibility_of_element_located((By.CLASS_NAME, "Modal_modal_overlay__x2ZCr"))
+        )
         submit_button.click()
         WebDriverWait(self.driver, TIME_WAIT).until(EC.url_to_be(Urls.main_page))
 

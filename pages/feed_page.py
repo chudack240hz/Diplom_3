@@ -14,6 +14,12 @@ from pages.base_page import BasePage
 class FeedPage(BasePage):
     """Класс страницы ленты (бургеры), содержащий методы для взаимодействия с элементами страницы"""
 
+    @allure.step('Открыть страницу ленты заказов')
+    def open(self):
+        """Открывает страницу ленты заказов"""
+        self.open_url(Urls.feed_page)
+        self.close_cookies_banner()
+
     @allure.step('Нажать кнопку "Личный кабинет" на странице ленты')
     def click_login_btn(self):
         """Кликает по кнопке 'Личный кабинет' на странице ленты"""

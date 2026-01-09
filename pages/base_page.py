@@ -7,6 +7,8 @@ from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
+from data import TIME_WAIT
+
 
 class BasePage:
     """Базовый класс страницы с общими взаимодействиями с веб-элементами"""
@@ -17,6 +19,11 @@ class BasePage:
     def find_element(self, locator: Tuple[str, str]) -> WebElement:
         """Поиск видимого элемента на странице"""
         return WebDriverWait(self.driver, 15).until(EC.visibility_of_element_located(locator))
+
+    def open_url(self, url: str, timeout: int = TIME_WAIT) -> None:
+        """Открывает заданный URL и ждет загрузки"""
+        self.driver.get(url)
+        WebDriverWait(self.driver, timeout).until(EC.url_to_be(url))
 
     def close_cookies_banner(self) -> None:
         """Закрывает баннер cookies, если он присутствует"""
